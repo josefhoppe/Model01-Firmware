@@ -3,21 +3,21 @@
 #include "LEDUtils.h"
 #include "layers.h"
 
-byte Gaming_::row = 255, Gaming_::col = 255;
-uint8_t Gaming_::gamingLayer;
-bool Gaming_::cleanupDone = true;
-bool Gaming_::originalNumLockState = false;
-cRGB Gaming_::color = CRGB(160, 0, 0);
-cRGB Gaming_::highlightColor = CRGB(0, 0, 160);
-uint8_t Gaming_::lock_hue = 170;
+byte JosefGaming_::row = 255, JosefGaming_::col = 255;
+uint8_t JosefGaming_::gamingLayer;
+bool JosefGaming_::cleanupDone = true;
+bool JosefGaming_::originalNumLockState = false;
+cRGB JosefGaming_::color = CRGB(160, 0, 0);
+cRGB JosefGaming_::highlightColor = CRGB(0, 0, 160);
+uint8_t JosefGaming_::lock_hue = 170;
 
-kaleidoscope::EventHandlerResult Gaming_::onSetup(void) {
+kaleidoscope::EventHandlerResult JosefGaming_::onSetup(void) {
   originalNumLockState =
       !!(kaleidoscope::hid::getKeyboardLEDs() & LED_NUM_LOCK);
   return kaleidoscope::EventHandlerResult::OK;
 }
 
-kaleidoscope::EventHandlerResult Gaming_::afterEachCycle() {
+kaleidoscope::EventHandlerResult JosefGaming_::afterEachCycle() {
   if (!Layer.isOn(gamingLayer)) {
     return kaleidoscope::EventHandlerResult::OK;
   }
@@ -57,18 +57,4 @@ kaleidoscope::EventHandlerResult Gaming_::afterEachCycle() {
   return kaleidoscope::EventHandlerResult::OK;
 }
 
-// Legacy V1 API
-#if KALEIDOSCOPE_ENABLE_V1_PLUGIN_API
-void Gaming_::begin() {
-  onSetup();
-  Kaleidoscope.useLoopHook(legacyLoopHook);
-}
-
-void Gaming_::legacyLoopHook(bool is_post_clear) {
-  if (!is_post_clear)
-    return;
-  Gaming.afterEachCycle();
-}
-#endif
-
-Gaming_ Gaming;
+JosefGaming_ JosefGaming;

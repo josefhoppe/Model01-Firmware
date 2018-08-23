@@ -456,7 +456,7 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // with a custom LED effect
   NumPad,
 
-  Gaming,
+  JosefGaming,
 
   // The macros plugin adds support for macros
   Macros,
@@ -492,7 +492,7 @@ void setup() {
   // needs to be explicitly told which keymap layer is your numpad layer
   NumPad.numPadLayer = NUMPAD;
 
-  Gaming.gamingLayer = GAMING;
+  JosefGaming.gamingLayer = GAMING;
 
   // We configure the AlphaSquare effect to use RED letters
   AlphaSquare.color = CRGB(255, 0, 0);
