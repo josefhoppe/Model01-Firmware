@@ -28,6 +28,9 @@
 // Support for "Numpad" mode, which is mostly just the Numpad specific LED mode
 #include "Kaleidoscope-NumPad.h"
 
+// Gaming Layer Color
+#include "src/Gaming.h"
+
 // Support for an "LED off mode"
 #include "LED-Off.h"
 
@@ -64,6 +67,7 @@
 
 // Support for USB quirks, like changing the key state report protocol
 #include "Kaleidoscope-USB-Quirks.h"
+
 
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
@@ -126,7 +130,7 @@ enum { MACRO_VERSION_INFO,
 
 */
 
-enum { PRIMARY, NUMPAD, FUNCTION }; // layers
+enum { PRIMARY, NUMPAD, FUNCTION, GAMING}; // layers
 
 
 /**
@@ -219,7 +223,7 @@ KEYMAPS(
    M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
    Key_Enter,     Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
                   Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
-   Key_RightAlt,  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
+   LockLayer(GAMING),  Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
    Key_LeftAlt, Key_RightShift, Key_Spacebar, Key_RightControl,
    Key_RightAlt),
 
@@ -233,11 +237,11 @@ KEYMAPS(
 
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___,             ___, ___, ___, ___, ___,
-   ___, ___,             Key_Q, Key_W, Key_E, Key_R, ___,
-   ___, Key_LeftShift,   Key_A, Key_S, Key_D, Key_F,
-   ___, Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, ___,
-   ___, Key_Spacebar,    ___, ___,
-   Key_Spacebar,
+   ___, ___,             ___, ___, ___, ___, ___,
+   ___, ___,   ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___,    ___, ___,
+   ___,
 
    M(MACRO_VERSION_INFO),  ___, Key_Keypad7, Key_Keypad8,   Key_Keypad9,        Key_KeypadSubtract, ___,
    ___,                    ___, Key_Keypad4, Key_Keypad5,   Key_Keypad6,        Key_KeypadAdd,      ___,
@@ -259,7 +263,22 @@ KEYMAPS(
                                Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
    Key_PcApplication,          Consumer_Mute,          Consumer_VolumeDecrement, Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
    ___, ___, Key_Enter, ___,
-   ___)
+   ___),
+
+   [GAMING] =  KEYMAP_STACKED
+  (___, ___,             ___, ___, ___, ___, ___,
+   ___, ___,             Key_Q, Key_W, Key_E, Key_R, ___,
+   ___, Key_LeftShift,   Key_A, Key_S, Key_D, Key_F,
+   ___, Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, ___,
+   ___, Key_Spacebar,    ___, ___,
+   Key_Spacebar,
+
+   M(MACRO_VERSION_INFO),  ___, ___, ___,   ___,        ___, ___,
+   ___,                    ___, ___, ___,   ___,        ___,      ___,
+                           ___, ___, ___,   ___,        ___,         ___,
+   ___,                    ___, ___, ___, ___, ___,   ___,
+   ___, ___, ___, ___,
+   ___),
 	) // KEYMAPS(
 
 /* Re-enable astyle's indent enforcement */
@@ -437,6 +456,8 @@ KALEIDOSCOPE_INIT_PLUGINS(
   // with a custom LED effect
   NumPad,
 
+  Gaming,
+
   // The macros plugin adds support for macros
   Macros,
 
@@ -470,6 +491,8 @@ void setup() {
   // While we hope to improve this in the future, the NumPad plugin
   // needs to be explicitly told which keymap layer is your numpad layer
   NumPad.numPadLayer = NUMPAD;
+
+  Gaming.gamingLayer = GAMING;
 
   // We configure the AlphaSquare effect to use RED letters
   AlphaSquare.color = CRGB(255, 0, 0);
