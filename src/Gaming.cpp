@@ -19,6 +19,10 @@ kaleidoscope::EventHandlerResult JosefGaming_::onSetup(void) {
 
 kaleidoscope::EventHandlerResult JosefGaming_::afterEachCycle() {
   if (!Layer.isOn(gamingLayer)) {
+    if (!cleanupDone) {
+      LEDControl.set_mode(LEDControl.get_mode_index());
+      cleanupDone = true;
+    }
     return kaleidoscope::EventHandlerResult::OK;
   }
 
