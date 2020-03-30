@@ -38,9 +38,6 @@
 // Gaming Layer Color
 #include "src/Gaming.h"
 
-// Support for an "LED off mode"
-#include "LED-Off.h"
-
 // Support for the "Boot greeting" effect, which pulses the 'LED' button for 10s
 // when the keyboard is connected to a computer (or that computer is powered on)
 #include "Kaleidoscope-LEDEffect-BootGreeting.h"
@@ -165,7 +162,7 @@ enum { PRIMARY, NUMPAD, FUNCTION, GAMING, ARROW}; // layers
 
 */
 
-//define PRIMARY_KEYMAP_QWERTY
+//#define PRIMARY_KEYMAP_QWERTY
 // #define PRIMARY_KEYMAP_COLEMAK
 // #define PRIMARY_KEYMAP_DVORAK
 #define PRIMARY_KEYMAP_CUSTOM
@@ -291,16 +288,13 @@ KEYMAPS(
    ___, Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, ___,
    ___, Key_Spacebar,    ___, ___,
    ___,
-
-   M(MACRO_VERSION_INFO),  ___, ___, ___,   ___,        ___, ___,
+   ___,  ___, ___, ___,   ___,        ___, ___,
    ___,                    ___, ___, ___,   ___,        ___,      ___,
                            ___, ___, ___,   ___,        ___,         ___,
    ___,                    ___, ___, ___, ___, ___,   ___,
    ___, ___, ___, ___,
    ___),
-	)
-	
-	[ARROWS] =  KEYMAP_STACKED
+	[ARROW] =  KEYMAP_STACKED
   (___, ___, ___,           ___,            ___,            ___, ___,
    ___, ___, ___,           Key_UpArrow,    ___,            ___, ___,
    ___, ___, Key_LeftArrow, Key_DownArrow,  Key_RightArrow, ___,
@@ -570,9 +564,6 @@ void setup() {
   // needs to be explicitly told which keymap layer is your numpad layer
   NumPad.numPadLayer = NUMPAD;
 
-  JosefGaming.gamingLayer = GAMING;
-  JosefGaming.arrowLayer = ARROW;
-
   // We configure the AlphaSquare effect to use RED letters
   AlphaSquare.color = CRGB(255, 0, 0);
 
@@ -600,6 +591,10 @@ void setup() {
   // by using the `settings.defaultLayer` Focus command, or by using the
   // `keymap.onlyCustom` command to use EEPROM layers only.
   EEPROMKeymap.setup(5);
+
+  JosefGaming.gamingLayer = GAMING;
+  JosefGaming.arrowLayer = ARROW;
+  JosefGaming.scan();
 
   // We need to tell the Colormap plugin how many layers we want to have custom
   // maps for. To make things simple, we set it to five layers, which is how
