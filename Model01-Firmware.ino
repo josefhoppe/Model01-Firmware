@@ -130,7 +130,7 @@ enum { MACRO_VERSION_INFO,
 
 */
 
-enum { PRIMARY, NUMPAD, FUNCTION, GAMING}; // layers
+enum { PRIMARY, NUMPAD, FUNCTION, GAMING, ARROW}; // layers
 
 
 /**
@@ -213,11 +213,11 @@ KEYMAPS(
 #elif defined (PRIMARY_KEYMAP_CUSTOM)
   // Edit this keymap to make a custom layout
   [PRIMARY] = KEYMAP_STACKED
-  (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
-   Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
-   Key_PageDown, Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
-   Key_LeftControl, Key_Backspace, Key_LeftShift, Key_LeftGui,
+  (LockLayer(ARROW), Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+   Key_Backtick,      Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
+   Key_PageUp,        Key_A, Key_S, Key_D, Key_F, Key_G,
+   Key_PageDown,      Key_Z, Key_X, Key_C, Key_V, Key_B, Key_Escape,
+   Key_LeftControl,   Key_Backspace, Key_LeftShift, Key_LeftGui,
    ShiftToLayer(FUNCTION),
 
    M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         LockLayer(NUMPAD),
@@ -267,11 +267,11 @@ KEYMAPS(
 
    [GAMING] =  KEYMAP_STACKED
   (___, ___,             ___, ___, ___, ___, ___,
-   ___, ___,             Key_Q, Key_W, Key_E, Key_R, ___,
+   ___, Key_T,             Key_Q, Key_W, Key_E, Key_R, ___,
    ___, Key_LeftShift,   Key_A, Key_S, Key_D, Key_F,
    ___, Key_LeftControl, Key_Z, Key_X, Key_C, Key_V, ___,
    ___, Key_Spacebar,    ___, ___,
-   Key_Spacebar,
+   ___,
 
    M(MACRO_VERSION_INFO),  ___, ___, ___,   ___,        ___, ___,
    ___,                    ___, ___, ___,   ___,        ___,      ___,
@@ -279,7 +279,23 @@ KEYMAPS(
    ___,                    ___, ___, ___, ___, ___,   ___,
    ___, ___, ___, ___,
    ___),
-	) // KEYMAPS(
+	)
+	
+	[ARROWS] =  KEYMAP_STACKED
+  (___, ___, ___,           ___,            ___,            ___, ___,
+   ___, ___, ___,           Key_UpArrow,    ___,            ___, ___,
+   ___, ___, Key_LeftArrow, Key_DownArrow,  Key_RightArrow, ___,
+   ___, ___, ___,            ___,           ___,            ___, ___,
+   ___, ___,    ___, ___,
+   ___,
+
+   M(MACRO_VERSION_INFO),  ___, ___, ___,   ___,        ___, ___,
+   ___,                    ___, ___, ___,   ___,        ___,      ___,
+                           ___, ___, ___,   ___,        ___,         ___,
+   ___,                    ___, ___, ___, ___, ___,   ___,
+   ___, ___, ___, ___,
+   ___),
+  )// KEYMAPS(
 
 /* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
@@ -493,6 +509,7 @@ void setup() {
   NumPad.numPadLayer = NUMPAD;
 
   JosefGaming.gamingLayer = GAMING;
+  JosefGaming.arrowLayer = ARROW;
 
   // We configure the AlphaSquare effect to use RED letters
   AlphaSquare.color = CRGB(255, 0, 0);

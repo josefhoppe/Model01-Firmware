@@ -5,10 +5,12 @@
 
 byte JosefGaming_::row = 255, JosefGaming_::col = 255;
 uint8_t JosefGaming_::gamingLayer;
+uint8_t JosefGaming_::arrowLayer;
 bool JosefGaming_::cleanupDone = true;
 bool JosefGaming_::originalNumLockState = false;
-cRGB JosefGaming_::color = CRGB(160, 0, 0);
-cRGB JosefGaming_::highlightColor = CRGB(0, 0, 160);
+cRGB JosefGaming_::color = CRGB(255, 0, 0);
+cRGB JosefGaming_::highlightColor = CRGB(0, 0, 255);
+cRGB JosefGaming_::arrowColor = CRGB(255, 0, 255);
 uint8_t JosefGaming_::lock_hue = 170;
 
 kaleidoscope::EventHandlerResult JosefGaming_::onSetup(void) {
@@ -34,6 +36,7 @@ kaleidoscope::EventHandlerResult JosefGaming_::afterEachCycle() {
     for (uint8_t c = 0; c < COLS; c++) {
       Key k = Layer.lookupOnActiveLayer(r, c);
       Key layer_key = Layer.getKey(gamingLayer, r, c);
+      Key arrow_layer_key = Layer.getKey(arrowLayer, r, c);
 
       if (k == LockLayer(gamingLayer)) {
         row = r;
@@ -45,6 +48,8 @@ kaleidoscope::EventHandlerResult JosefGaming_::afterEachCycle() {
       } else {
         if (k == Key_W || k == Key_A || k == Key_S || k == Key_D) {
           LEDControl.setCrgbAt(r, c, highlightColor);
+        } else if(k == Key_UpArrow || k == Key_DownArrow || k == Key_RightArrow || k == Key_LeftArrow || k == LockLayer(arrowLayer)) {
+          LEDControl.setCrgbAt(r, c, arrowColor);
         } else {
           LEDControl.setCrgbAt(r, c, color);
         }
